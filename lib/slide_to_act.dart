@@ -125,6 +125,16 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
           key: _containerKey,
           height: widget.height,
           width: _containerWidth,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.white.withOpacity(0.40),
+                Colors.white.withOpacity(0.10),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
           constraints:
               _containerWidth != null ? null : BoxConstraints.expand(height: widget.height),
           child: Material(
