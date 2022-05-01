@@ -201,7 +201,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                   }
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.only(right: 8),
+                                  padding: const EdgeInsets.only(left: 8, right: 24),
                                   child: Transform.rotate(
                                     angle: widget.sliderRotate ? -pi * _progress : 0,
                                     child: Center(
