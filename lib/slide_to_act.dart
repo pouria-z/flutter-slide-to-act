@@ -201,7 +201,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                   }
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.only(left: 8, right: 24),
+                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                   child: Transform.rotate(
                                     angle: widget.sliderRotate ? -pi * _progress : 0,
                                     child: Center(
@@ -365,7 +365,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
       final RenderBox sliderBox = _sliderKey.currentContext!.findRenderObject() as RenderBox;
       final sliderWidth = sliderBox.size.width;
 
-      _maxDx = _containerWidth! - (sliderWidth / 2) - 40 - widget.sliderButtonYOffset;
+      _maxDx = _containerWidth! - (sliderWidth / 2) - 56 - widget.sliderButtonYOffset;
     });
   }
 
