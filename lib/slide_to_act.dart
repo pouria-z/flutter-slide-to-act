@@ -53,6 +53,9 @@ class SlideAction extends StatefulWidget {
   /// The widget to render instead of the default icon
   final Widget? sliderButtonIcon;
 
+  /// The title of slider icon
+  final Widget? sliderButtonTitle;
+
   /// The widget to render instead of the default submitted icon
   final Widget? submittedIcon;
 
@@ -80,6 +83,7 @@ class SlideAction extends StatefulWidget {
     this.reversed = false,
     this.alignment = Alignment.center,
     this.submittedIcon,
+    this.sliderButtonTitle,
     this.onSubmit,
     this.child,
     this.innerColor,
@@ -202,17 +206,26 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                  child: Transform.rotate(
-                                    angle: widget.sliderRotate ? -pi * _progress : 0,
-                                    child: Center(
-                                      child: widget.sliderButtonIcon ??
-                                          Icon(
-                                            Icons.arrow_forward,
-                                            size: widget.sliderButtonIconSize,
-                                            color: widget.outerColor ??
-                                                Theme.of(context).colorScheme.secondary,
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                                      child: Row(
+                                        children: [
+                                          Transform.rotate(
+                                            angle: widget.sliderRotate ? -pi * _progress : 0,
+                                            child: widget.sliderButtonIcon ?? Container(),
                                           ),
+                                          const SizedBox(width: 15),
+                                          widget.sliderButtonTitle ?? Container(),
+                                        ],
+                                      ),
                                     ),
+                                    // Icon(
+                                    //   Icons.arrow_forward,
+                                    //   size: widget.sliderButtonIconSize,
+                                    //   color: widget.outerColor ??
+                                    //       Theme.of(context).colorScheme.secondary,
+                                    // ),
                                   ),
                                 ),
                               ),
