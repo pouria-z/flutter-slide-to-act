@@ -209,22 +209,22 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                   child: Center(
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 10),
-                                      child: Row(
-                                        children: [
-                                          Transform.rotate(
-                                            angle: widget.sliderRotate ? -pi * _progress : 0,
-                                            child: Container(
+                                      child: Container(
+                                        height: widget.height - 10,
+                                        decoration: BoxDecoration(
+                                          color: widget.innerColor,
+                                          borderRadius: BorderRadius.circular(50),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Transform.rotate(
+                                              angle: widget.sliderRotate ? -pi * _progress : 0,
                                               child: widget.sliderButtonIcon ?? Container(),
-                                              height: widget.height - 10,
-                                              decoration: BoxDecoration(
-                                                color: widget.innerColor,
-                                                borderRadius: BorderRadius.circular(50),
-                                              ),
                                             ),
-                                          ),
-                                          const SizedBox(width: 15),
-                                          widget.sliderButtonTitle ?? Container(),
-                                        ],
+                                            const SizedBox(width: 15),
+                                            widget.sliderButtonTitle ?? Container(),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                     // Icon(
