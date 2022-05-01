@@ -135,12 +135,12 @@ class SlideActionState extends State<SlideAction>
                       child: Stack(
                         clipBehavior: Clip.antiAlias,
                         children: <Widget>[
-                          widget.submittedIcon ??
-                              Icon(
-                                Icons.done,
-                                color: widget.innerColor ??
-                                    Theme.of(context).primaryIconTheme.color,
-                              ),
+                          // widget.submittedIcon ??
+                          //     Icon(
+                          //       Icons.done,
+                          //       color: widget.innerColor ??
+                          //           Theme.of(context).primaryIconTheme.color,
+                          //     ),
                           Positioned.fill(
                             right: 0,
                             child: Transform(
