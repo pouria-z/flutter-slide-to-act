@@ -199,9 +199,9 @@ class SlideActionState extends State<SlideAction>
                                       widget.onSubmit == null) {
                                     _cancelAnimation();
                                   } else {
-                                    await _resizeAnimation();
+                                    // await _resizeAnimation();
 
-                                    await _shrinkAnimation();
+                                    // await _shrinkAnimation();
 
                                     await _checkAnimation();
 
