@@ -200,11 +200,9 @@ class SlideActionState extends State<SlideAction>
                                     _cancelAnimation();
                                   } else {
                                     // await _resizeAnimation();
-
                                     // await _shrinkAnimation();
-
                                     await _checkAnimation();
-
+                                    await _cancelAnimation();
                                     widget.onSubmit!();
                                   }
                                 },
@@ -293,52 +291,52 @@ class SlideActionState extends State<SlideAction>
     await _checkAnimationController.forward().orCancel;
   }
 
-  Future _shrinkAnimation() async {
-    _shrinkAnimationController.reset();
+  // Future _shrinkAnimation() async {
+  //   _shrinkAnimationController.reset();
+  //
+  //   final diff = _initialContainerWidth! - widget.height;
+  //   final animation = Tween<double>(
+  //     begin: 0,
+  //     end: 1,
+  //   ).animate(CurvedAnimation(
+  //     parent: _shrinkAnimationController,
+  //     curve: Curves.easeOutCirc,
+  //   ));
+  //
+  //   animation.addListener(() {
+  //     if (mounted) {
+  //       setState(() {
+  //         _containerWidth = _initialContainerWidth! - (diff * animation.value);
+  //       });
+  //     }
+  //   });
+  //
+  //   setState(() {
+  //     submitted = true;
+  //   });
+  //   await _shrinkAnimationController.forward().orCancel;
+  // }
 
-    final diff = _initialContainerWidth! - widget.height;
-    final animation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(CurvedAnimation(
-      parent: _shrinkAnimationController,
-      curve: Curves.easeOutCirc,
-    ));
-
-    animation.addListener(() {
-      if (mounted) {
-        setState(() {
-          _containerWidth = _initialContainerWidth! - (diff * animation.value);
-        });
-      }
-    });
-
-    setState(() {
-      submitted = true;
-    });
-    await _shrinkAnimationController.forward().orCancel;
-  }
-
-  Future _resizeAnimation() async {
-    _resizeAnimationController.reset();
-
-    final animation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(CurvedAnimation(
-      parent: _resizeAnimationController,
-      curve: Curves.easeInBack,
-    ));
-
-    animation.addListener(() {
-      if (mounted) {
-        setState(() {
-          _dz = 1 - animation.value;
-        });
-      }
-    });
-    await _resizeAnimationController.forward().orCancel;
-  }
+  // Future _resizeAnimation() async {
+  //   _resizeAnimationController.reset();
+  //
+  //   final animation = Tween<double>(
+  //     begin: 0,
+  //     end: 1,
+  //   ).animate(CurvedAnimation(
+  //     parent: _resizeAnimationController,
+  //     curve: Curves.easeInBack,
+  //   ));
+  //
+  //   animation.addListener(() {
+  //     if (mounted) {
+  //       setState(() {
+  //         _dz = 1 - animation.value;
+  //       });
+  //     }
+  //   });
+  //   await _resizeAnimationController.forward().orCancel;
+  // }
 
   Future _cancelAnimation() async {
     _cancelAnimationController.reset();
@@ -347,7 +345,7 @@ class SlideActionState extends State<SlideAction>
       end: 1,
     ).animate(CurvedAnimation(
       parent: _cancelAnimationController,
-      curve: Curves.fastOutSlowIn,
+      curve: Curves.bounceOut,
     ));
 
     animation.addListener(() {
