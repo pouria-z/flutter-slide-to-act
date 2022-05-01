@@ -194,7 +194,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                 onHorizontalDragUpdate: onHorizontalDragUpdate,
                                 onHorizontalDragEnd: (details) async {
                                   _endDx = _dx;
-                                  if (_progress <= 0.8 || widget.onSubmit == null) {
+                                  if (_progress <= 0.95 || widget.onSubmit == null) {
                                     _cancelAnimation();
                                   } else {
                                     // await _resizeAnimation();
