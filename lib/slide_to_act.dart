@@ -213,7 +213,14 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                         children: [
                                           Transform.rotate(
                                             angle: widget.sliderRotate ? -pi * _progress : 0,
-                                            child: widget.sliderButtonIcon ?? Container(),
+                                            child: Container(
+                                              child: widget.sliderButtonIcon ?? Container(),
+                                              height: widget.height - 10,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xffdc3545),
+                                                borderRadius: BorderRadius.circular(50),
+                                              ),
+                                            ),
                                           ),
                                           const SizedBox(width: 15),
                                           widget.sliderButtonTitle ?? Container(),
