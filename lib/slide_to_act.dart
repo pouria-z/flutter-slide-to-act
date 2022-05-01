@@ -217,7 +217,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                               child: widget.sliderButtonIcon ?? Container(),
                                               height: widget.height - 10,
                                               decoration: BoxDecoration(
-                                                color: Color(0xffdc3545),
+                                                color: widget.innerColor,
                                                 borderRadius: BorderRadius.circular(50),
                                               ),
                                             ),
