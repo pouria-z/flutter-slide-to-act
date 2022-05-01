@@ -207,14 +207,14 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                   child: Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                                      child: Container(
-                                        height: widget.height - 10,
-                                        decoration: BoxDecoration(
-                                          color: widget.innerColor,
-                                          borderRadius: BorderRadius.circular(50),
-                                        ),
+                                    child: Container(
+                                      height: widget.height - 10,
+                                      decoration: BoxDecoration(
+                                        color: widget.innerColor,
+                                        borderRadius: BorderRadius.circular(50),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 10),
                                         child: Row(
                                           children: [
                                             Transform.rotate(
