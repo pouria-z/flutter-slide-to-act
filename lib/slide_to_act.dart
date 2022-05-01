@@ -202,22 +202,17 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                  child: Material(
-                                    borderRadius: BorderRadius.circular(widget.borderRadius),
-                                    child: Transform.rotate(
-                                      angle: widget.sliderRotate ? -pi * _progress : 0,
-                                      child: Center(
-                                        child: widget.sliderButtonIcon ??
-                                            Icon(
-                                              Icons.arrow_forward,
-                                              size: widget.sliderButtonIconSize,
-                                              color: widget.outerColor ??
-                                                  Theme.of(context).colorScheme.secondary,
-                                            ),
-                                      ),
+                                  child: Transform.rotate(
+                                    angle: widget.sliderRotate ? -pi * _progress : 0,
+                                    child: Center(
+                                      child: widget.sliderButtonIcon ??
+                                          Icon(
+                                            Icons.arrow_forward,
+                                            size: widget.sliderButtonIconSize,
+                                            color: widget.outerColor ??
+                                                Theme.of(context).colorScheme.secondary,
+                                          ),
                                     ),
-                                    color: widget.innerColor ??
-                                        Theme.of(context).primaryIconTheme.color,
                                   ),
                                 ),
                               ),
