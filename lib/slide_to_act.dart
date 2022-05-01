@@ -199,9 +199,9 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                   } else {
                                     // await _resizeAnimation();
                                     // await _shrinkAnimation();
+                                    widget.onSubmit!();
                                     await _checkAnimation();
                                     await _cancelAnimation();
-                                    widget.onSubmit!();
                                   }
                                 },
                                 child: Padding(
