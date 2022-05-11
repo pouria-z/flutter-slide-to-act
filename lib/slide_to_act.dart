@@ -385,7 +385,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
       final RenderBox sliderBox = _sliderKey.currentContext!.findRenderObject() as RenderBox;
       final sliderWidth = sliderBox.size.width;
 
-      _maxDx = _containerWidth! - (sliderWidth / 2) - 72 - widget.sliderButtonYOffset;
+      _maxDx = _containerWidth! - (sliderWidth / 2) - 52 - widget.sliderButtonYOffset;
     });
   }
 
