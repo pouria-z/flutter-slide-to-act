@@ -191,6 +191,11 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                             child: Container(
                               key: _sliderKey,
                               child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _dx = _dx * 0.2;
+                                  });
+                                },
                                 onHorizontalDragUpdate: onHorizontalDragUpdate,
                                 onHorizontalDragEnd: (details) async {
                                   _endDx = _dx;
