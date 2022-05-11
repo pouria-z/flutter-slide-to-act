@@ -193,9 +193,9 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                               child: GestureDetector(
                                 onTap: () async {
                                   setState(() {
-                                    _dx = _dx + 50;
+                                    _dx = _dx + 50.clamp(0.0, _maxDx);
                                   });
-                                  await Future.delayed(Duration(milliseconds: 250), () {
+                                  await Future.delayed(Duration(milliseconds: 800), () {
                                     _cancelAnimation();
                                   });
                                 },
