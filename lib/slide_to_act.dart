@@ -123,79 +123,79 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
       child: Transform(
         alignment: Alignment.center,
         transform: Matrix4.rotationY(widget.reversed ? pi : 0),
-        child: Container(
-          key: _containerKey,
-          height: widget.height,
-          width: _containerWidth,
-          constraints:
-              _containerWidth != null ? null : BoxConstraints.expand(height: widget.height),
-          child: Material(
-            elevation: widget.elevation,
-            color: widget.outerColor ?? Theme.of(context).colorScheme.secondary,
-            borderRadius: BorderRadius.circular(widget.borderRadius),
-            child: submitted
-                ? Transform(
-                    alignment: Alignment.center,
-                    transform: Matrix4.rotationY(widget.reversed ? pi : 0),
-                    child: Center(
-                      child: Stack(
-                        clipBehavior: Clip.antiAlias,
-                        children: <Widget>[
-                          // widget.submittedIcon ??
-                          //     Icon(
-                          //       Icons.done,
-                          //       color: widget.innerColor ??
-                          //           Theme.of(context).primaryIconTheme.color,
-                          //     ),
-                          Positioned.fill(
-                            right: 0,
-                            child: Transform(
-                              transform: Matrix4.rotationY(_checkAnimationDx * (pi / 2)),
-                              alignment: Alignment.centerRight,
-                              child: Container(
-                                color: widget.outerColor ?? Theme.of(context).colorScheme.secondary,
+        child: MeasuredSize(
+          onChange: (size) {
+            setState(() {
+              _sliderWidth = size.width;
+            });
+          },
+          child: Container(
+            key: _containerKey,
+            height: widget.height,
+            width: _containerWidth,
+            constraints:
+                _containerWidth != null ? null : BoxConstraints.expand(height: widget.height),
+            child: Material(
+              elevation: widget.elevation,
+              color: widget.outerColor ?? Theme.of(context).colorScheme.secondary,
+              borderRadius: BorderRadius.circular(widget.borderRadius),
+              child: submitted
+                  ? Transform(
+                      alignment: Alignment.center,
+                      transform: Matrix4.rotationY(widget.reversed ? pi : 0),
+                      child: Center(
+                        child: Stack(
+                          clipBehavior: Clip.antiAlias,
+                          children: <Widget>[
+                            // widget.submittedIcon ??
+                            //     Icon(
+                            //       Icons.done,
+                            //       color: widget.innerColor ??
+                            //           Theme.of(context).primaryIconTheme.color,
+                            //     ),
+                            Positioned.fill(
+                              right: 0,
+                              child: Transform(
+                                transform: Matrix4.rotationY(_checkAnimationDx * (pi / 2)),
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                  color: widget.outerColor ?? Theme.of(context).colorScheme.secondary,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                : Stack(
-                    alignment: Alignment.center,
-                    clipBehavior: Clip.none,
-                    children: <Widget>[
-                      Opacity(
-                        opacity: 1 - 1 * _progress,
-                        child: Transform(
-                          alignment: Alignment.center,
-                          transform: Matrix4.rotationY(widget.reversed ? pi : 0),
-                          child: widget.child ??
-                              Text(
-                                widget.text ?? 'Slide to act',
-                                textAlign: TextAlign.center,
-                                style: widget.textStyle ??
-                                    TextStyle(
-                                      color: widget.innerColor ??
-                                          Theme.of(context).primaryIconTheme.color,
-                                      fontSize: 24,
-                                    ),
-                              ),
+                          ],
                         ),
                       ),
-                      Positioned(
-                        left: widget.sliderButtonYOffset,
-                        child: Transform.scale(
-                          scale: _dz,
-                          origin: Offset(_dx, 0),
-                          child: Transform.translate(
-                            offset: Offset(_dx, 0),
-                            child: MeasuredSize(
-                              onChange: (size) {
-                                setState(() {
-                                  _sliderWidth = size.width;
-                                });
-                              },
+                    )
+                  : Stack(
+                      alignment: Alignment.center,
+                      clipBehavior: Clip.none,
+                      children: <Widget>[
+                        Opacity(
+                          opacity: 1 - 1 * _progress,
+                          child: Transform(
+                            alignment: Alignment.center,
+                            transform: Matrix4.rotationY(widget.reversed ? pi : 0),
+                            child: widget.child ??
+                                Text(
+                                  widget.text ?? 'Slide to act',
+                                  textAlign: TextAlign.center,
+                                  style: widget.textStyle ??
+                                      TextStyle(
+                                        color: widget.innerColor ??
+                                            Theme.of(context).primaryIconTheme.color,
+                                        fontSize: 24,
+                                      ),
+                                ),
+                          ),
+                        ),
+                        Positioned(
+                          left: widget.sliderButtonYOffset,
+                          child: Transform.scale(
+                            scale: _dz,
+                            origin: Offset(_dx, 0),
+                            child: Transform.translate(
+                              offset: Offset(_dx, 0),
                               child: Container(
                                 key: _sliderKey,
                                 child: GestureDetector(
@@ -248,9 +248,9 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+            ),
           ),
         ),
       ),
@@ -394,7 +394,8 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
       final RenderBox sliderBox = _sliderKey.currentContext!.findRenderObject() as RenderBox;
       final sliderWidth = sliderBox.size.width;
 
-      _maxDx = _containerWidth! - (_sliderWidth / 2) - widget.sliderButtonYOffset;
+      // _maxDx = _containerWidth! - (_sliderWidth / 2) - widget.sliderButtonYOffset;
+      _maxDx = _sliderWidth;
     });
   }
 
