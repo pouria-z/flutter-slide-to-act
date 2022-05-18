@@ -10,6 +10,8 @@ class SlideAction extends StatefulWidget {
   /// The size of the sliding icon
   final double sliderButtonIconSize;
 
+  final double maxDx;
+
   /// Tha padding of the sliding icon
   final double sliderButtonIconPadding;
 
@@ -73,6 +75,7 @@ class SlideAction extends StatefulWidget {
   const SlideAction({
     Key? key,
     this.sliderButtonIconSize = 24,
+    required this.maxDx,
     this.sliderButtonIconPadding = 16,
     this.sliderButtonYOffset = 0,
     this.sliderRotate = true,
@@ -394,7 +397,8 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
       final RenderBox sliderBox = _sliderKey.currentContext!.findRenderObject() as RenderBox;
       final sliderWidth = sliderBox.size.width;
 
-      _maxDx = _containerWidth! - (_sliderWidth) - 50 - widget.sliderButtonYOffset;
+      // _maxDx = _containerWidth! - (_sliderWidth) - 50 - widget.sliderButtonYOffset;
+      _maxDx = widget.maxDx;
     });
   }
 
