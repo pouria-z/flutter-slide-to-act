@@ -123,18 +123,18 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
       child: Transform(
         alignment: Alignment.center,
         transform: Matrix4.rotationY(widget.reversed ? pi : 0),
-        child: MeasuredSize(
-          onChange: (size) {
-            setState(() {
-              _sliderWidth = size.width;
-            });
-          },
-          child: Container(
-            key: _containerKey,
-            height: widget.height,
-            width: _containerWidth,
-            constraints:
-                _containerWidth != null ? null : BoxConstraints.expand(height: widget.height),
+        child: Container(
+          key: _containerKey,
+          height: widget.height,
+          width: _containerWidth,
+          constraints:
+              _containerWidth != null ? null : BoxConstraints.expand(height: widget.height),
+          child: MeasuredSize(
+            onChange: (size) {
+              setState(() {
+                _sliderWidth = size.width;
+              });
+            },
             child: Material(
               elevation: widget.elevation,
               color: widget.outerColor ?? Theme.of(context).colorScheme.secondary,
