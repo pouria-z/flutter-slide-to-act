@@ -104,7 +104,6 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
   double _dx = 0;
   double _maxDx = 0;
   double _sliderWidth = 0.0;
-  double _containerSize = 0.0;
 
   double get _progress => _dx == 0 ? 0 : _dx / _maxDx;
   double _endDx = 0;
@@ -124,131 +123,124 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
       child: Transform(
         alignment: Alignment.center,
         transform: Matrix4.rotationY(widget.reversed ? pi : 0),
-        child: MeasuredSize(
-          onChange: (size) {
-            setState(() {
-              _containerSize = size.width;
-            });
-          },
-          child: Container(
-            key: _containerKey,
-            height: widget.height,
-            width: _containerWidth,
-            constraints:
-                _containerWidth != null ? null : BoxConstraints.expand(height: widget.height),
-            child: Material(
-              elevation: widget.elevation,
-              color: widget.outerColor ?? Theme.of(context).colorScheme.secondary,
-              borderRadius: BorderRadius.circular(widget.borderRadius),
-              child: submitted
-                  ? Transform(
-                      alignment: Alignment.center,
-                      transform: Matrix4.rotationY(widget.reversed ? pi : 0),
-                      child: Center(
-                        child: Stack(
-                          clipBehavior: Clip.antiAlias,
-                          children: <Widget>[
-                            // widget.submittedIcon ??
-                            //     Icon(
-                            //       Icons.done,
-                            //       color: widget.innerColor ??
-                            //           Theme.of(context).primaryIconTheme.color,
-                            //     ),
-                            Positioned.fill(
-                              right: 0,
-                              child: Transform(
-                                transform: Matrix4.rotationY(_checkAnimationDx * (pi / 2)),
-                                alignment: Alignment.centerRight,
-                                child: Container(
-                                  color: widget.outerColor ?? Theme.of(context).colorScheme.secondary,
-                                ),
+        child: Container(
+          key: _containerKey,
+          height: widget.height,
+          width: _containerWidth,
+          constraints:
+              _containerWidth != null ? null : BoxConstraints.expand(height: widget.height),
+          child: Material(
+            elevation: widget.elevation,
+            color: widget.outerColor ?? Theme.of(context).colorScheme.secondary,
+            borderRadius: BorderRadius.circular(widget.borderRadius),
+            child: submitted
+                ? Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.rotationY(widget.reversed ? pi : 0),
+                    child: Center(
+                      child: Stack(
+                        clipBehavior: Clip.antiAlias,
+                        children: <Widget>[
+                          // widget.submittedIcon ??
+                          //     Icon(
+                          //       Icons.done,
+                          //       color: widget.innerColor ??
+                          //           Theme.of(context).primaryIconTheme.color,
+                          //     ),
+                          Positioned.fill(
+                            right: 0,
+                            child: Transform(
+                              transform: Matrix4.rotationY(_checkAnimationDx * (pi / 2)),
+                              alignment: Alignment.centerRight,
+                              child: Container(
+                                color: widget.outerColor ?? Theme.of(context).colorScheme.secondary,
                               ),
                             ),
-                          ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : Stack(
+                    alignment: Alignment.center,
+                    clipBehavior: Clip.none,
+                    children: <Widget>[
+                      Opacity(
+                        opacity: 1 - 1 * _progress,
+                        child: Transform(
+                          alignment: Alignment.center,
+                          transform: Matrix4.rotationY(widget.reversed ? pi : 0),
+                          child: widget.child ??
+                              Text(
+                                widget.text ?? 'Slide to act',
+                                textAlign: TextAlign.center,
+                                style: widget.textStyle ??
+                                    TextStyle(
+                                      color: widget.innerColor ??
+                                          Theme.of(context).primaryIconTheme.color,
+                                      fontSize: 24,
+                                    ),
+                              ),
                         ),
                       ),
-                    )
-                  : Stack(
-                      alignment: Alignment.center,
-                      clipBehavior: Clip.none,
-                      children: <Widget>[
-                        Opacity(
-                          opacity: 1 - 1 * _progress,
-                          child: Transform(
-                            alignment: Alignment.center,
-                            transform: Matrix4.rotationY(widget.reversed ? pi : 0),
-                            child: widget.child ??
-                                Text(
-                                  widget.text ?? 'Slide to act',
-                                  textAlign: TextAlign.center,
-                                  style: widget.textStyle ??
-                                      TextStyle(
-                                        color: widget.innerColor ??
-                                            Theme.of(context).primaryIconTheme.color,
-                                        fontSize: 24,
-                                      ),
-                                ),
-                          ),
-                        ),
-                        Positioned(
-                          left: widget.sliderButtonYOffset,
-                          child: Transform.scale(
-                            scale: _dz,
-                            origin: Offset(_dx, 0),
-                            child: Transform.translate(
-                              offset: Offset(_dx, 0),
-                              child: MeasuredSize(
-                                onChange: (size) {
-                                  setState(() {
-                                    _sliderWidth = size.width;
-                                  });
-                                },
-                                child: Container(
-                                  key: _sliderKey,
-                                  child: GestureDetector(
-                                    onHorizontalDragUpdate: onHorizontalDragUpdate,
-                                    onHorizontalDragEnd: (details) async {
-                                      _endDx = _dx;
-                                      if (_progress <= 0.95 || widget.onSubmit == null) {
-                                        _cancelAnimation();
-                                      } else {
-                                        // await _resizeAnimation();
-                                        // await _shrinkAnimation();
-                                        widget.onSubmit!();
-                                        await _checkAnimation();
-                                        await _cancelAnimation();
-                                      }
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                      child: Center(
-                                        child: Container(
-                                          height: widget.height - 10,
-                                          decoration: BoxDecoration(
-                                            color: widget.innerColor,
-                                            borderRadius: BorderRadius.circular(50),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                                            child: Row(
-                                              children: [
-                                                Transform.rotate(
-                                                  angle: widget.sliderRotate ? -pi * _progress : 0,
-                                                  child: widget.sliderButtonIcon ?? Container(),
-                                                ),
-                                                const SizedBox(width: 15),
-                                                widget.sliderButtonTitle ?? Container(),
-                                              ],
-                                            ),
+                      Positioned(
+                        left: widget.sliderButtonYOffset,
+                        child: Transform.scale(
+                          scale: _dz,
+                          origin: Offset(_dx, 0),
+                          child: Transform.translate(
+                            offset: Offset(_dx, 0),
+                            child: MeasuredSize(
+                              onChange: (size) {
+                                setState(() {
+                                  _sliderWidth = size.width;
+                                });
+                              },
+                              child: Container(
+                                key: _sliderKey,
+                                child: GestureDetector(
+                                  onHorizontalDragUpdate: onHorizontalDragUpdate,
+                                  onHorizontalDragEnd: (details) async {
+                                    _endDx = _dx;
+                                    if (_progress <= 0.95 || widget.onSubmit == null) {
+                                      _cancelAnimation();
+                                    } else {
+                                      // await _resizeAnimation();
+                                      // await _shrinkAnimation();
+                                      widget.onSubmit!();
+                                      await _checkAnimation();
+                                      await _cancelAnimation();
+                                    }
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                    child: Center(
+                                      child: Container(
+                                        height: widget.height - 10,
+                                        decoration: BoxDecoration(
+                                          color: widget.innerColor,
+                                          borderRadius: BorderRadius.circular(50),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                                          child: Row(
+                                            children: [
+                                              Transform.rotate(
+                                                angle: widget.sliderRotate ? -pi * _progress : 0,
+                                                child: widget.sliderButtonIcon ?? Container(),
+                                              ),
+                                              const SizedBox(width: 15),
+                                              widget.sliderButtonTitle ?? Container(),
+                                            ],
                                           ),
                                         ),
-                                        // Icon(
-                                        //   Icons.arrow_forward,
-                                        //   size: widget.sliderButtonIconSize,
-                                        //   color: widget.outerColor ??
-                                        //       Theme.of(context).colorScheme.secondary,
-                                        // ),
                                       ),
+                                      // Icon(
+                                      //   Icons.arrow_forward,
+                                      //   size: widget.sliderButtonIconSize,
+                                      //   color: widget.outerColor ??
+                                      //       Theme.of(context).colorScheme.secondary,
+                                      // ),
                                     ),
                                   ),
                                 ),
@@ -256,9 +248,9 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                             ),
                           ),
                         ),
-                      ],
-                    ),
-            ),
+                      ),
+                    ],
+                  ),
           ),
         ),
       ),
@@ -402,7 +394,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
       final RenderBox sliderBox = _sliderKey.currentContext!.findRenderObject() as RenderBox;
       final sliderWidth = sliderBox.size.width;
 
-      _maxDx = _containerSize - (_sliderWidth / 2) - widget.sliderButtonYOffset;
+      _maxDx = _containerWidth! - (_sliderWidth / 2) - 50 - widget.sliderButtonYOffset;
     });
   }
 
