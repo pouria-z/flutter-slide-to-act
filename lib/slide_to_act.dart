@@ -205,7 +205,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                   onTap: () async {
                                     await Future.delayed(Duration.zero, () {
                                       setState(() {
-                                        _dx = (_dx + 100).clamp(0.0, _maxDx);
+                                        _dx = (_dx + 50).clamp(0.0, _maxDx);
                                       });
                                     });
                                     await Future.delayed(Duration.zero, () {
