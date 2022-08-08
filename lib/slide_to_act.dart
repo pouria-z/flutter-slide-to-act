@@ -71,6 +71,9 @@ class SlideAction extends StatefulWidget {
   /// the alignment of the widget once it's submitted
   final Alignment alignment;
 
+  /// double tap on the button callback
+  final void Function()? onDoubleTap;
+
   /// Create a new instance of the widget
   const SlideAction({
     Key? key,
@@ -94,6 +97,7 @@ class SlideAction extends StatefulWidget {
     this.text,
     this.textStyle,
     this.sliderButtonIcon,
+    this.onDoubleTap,
   }) : super(key: key);
 
   @override
@@ -215,6 +219,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                     });
                                     _cancelAnimation();
                                   },
+                                  onDoubleTap: widget.onDoubleTap,
                                   onHorizontalDragUpdate: onHorizontalDragUpdate,
                                   onHorizontalDragEnd: (details) async {
 
