@@ -71,6 +71,9 @@ class SlideAction extends StatefulWidget {
   /// the alignment of the widget once it's submitted
   final Alignment alignment;
 
+  /// one tap on the button callback
+  final void Function()? onTap;
+
   /// double tap on the button callback
   final void Function()? onDoubleTap;
 
@@ -97,6 +100,7 @@ class SlideAction extends StatefulWidget {
     this.text,
     this.textStyle,
     this.sliderButtonIcon,
+    this.onTap,
     this.onDoubleTap,
   }) : super(key: key);
 
@@ -218,6 +222,9 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                       });
                                     });
                                     _cancelAnimation();
+                                    if (widget.onTap != null) {
+                                      widget.onTap!.call();
+                                    }
                                   },
                                   onDoubleTap: widget.onDoubleTap,
                                   onHorizontalDragUpdate: onHorizontalDragUpdate,
