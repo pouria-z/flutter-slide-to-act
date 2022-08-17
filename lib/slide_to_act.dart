@@ -225,8 +225,8 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                     // });
                                     // _cancelAnimation();
                                     _animationController
-                                        .reverse()
-                                        .whenComplete(() => _animationController.forward());
+                                        .reverse();
+                                        // .whenComplete(() => _animationController.forward());
                                     if (widget.onTap != null) {
                                       widget.onTap!.call();
                                     }
