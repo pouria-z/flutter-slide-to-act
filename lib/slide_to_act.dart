@@ -249,7 +249,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                     child: Center(
                                       child: BounceInRight(
-                                        from: MediaQuery.of(context).size.width / 2,
+                                        from: MediaQuery.of(context).size.width / 5,
                                         controller: (p0) => _animationController = p0,
                                         child: Container(
                                           height: widget.height - 10,
