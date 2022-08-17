@@ -224,10 +224,8 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                     //   });
                                     // });
                                     // _cancelAnimation();
-                                    _animationController
-                                        .reverse()
-                                        .whenComplete(() => _cancelAnimation());
-                                    // .whenComplete(() => _animationController.forward());
+                                    await _animationController.reverse();
+                                    _cancelAnimation();
                                     if (widget.onTap != null) {
                                       widget.onTap!.call();
                                     }
@@ -249,7 +247,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                     child: Center(
-                                      child: BounceInRight(
+                                      child: SlideInRight(
                                         from: MediaQuery.of(context).size.width / 5,
                                         controller: (p0) => _animationController = p0,
                                         child: Container(
