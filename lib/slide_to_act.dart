@@ -254,6 +254,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                         controller: (p0) => _animationController = p0,
                                         child: Container(
                                           height: widget.height - 10,
+
                                           decoration: BoxDecoration(
                                             color: widget.innerColor,
                                             borderRadius: BorderRadius.circular(50),
@@ -434,8 +435,8 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
       final RenderBox sliderBox = _sliderKey.currentContext!.findRenderObject() as RenderBox;
       final sliderWidth = sliderBox.size.width;
 
-      // _maxDx = _containerWidth! - (_sliderWidth) - 50 - widget.sliderButtonYOffset;
-      _maxDx = widget.maxDx;
+      _maxDx = _containerWidth! - (sliderWidth) - widget.sliderButtonYOffset;
+      // _maxDx = widget.maxDx;
     });
   }
 
