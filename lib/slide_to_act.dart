@@ -388,8 +388,8 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
   Future _startAnimation() async {
     _startAnimationController.reset();
     final animation = Tween<double>(
-      begin: 1,
-      end: 0,
+      begin: 0,
+      end: 1,
     ).animate(CurvedAnimation(
       parent: _startAnimationController,
       curve: Curves.ease,
