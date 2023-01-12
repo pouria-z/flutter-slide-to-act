@@ -1,6 +1,5 @@
 library flutterslidetoact;
 
-import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -123,6 +122,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
   late AnimationController _checkAnimationController,
       _shrinkAnimationController,
       _resizeAnimationController,
+      _startAnimationController,
       _cancelAnimationController;
 
   @override
@@ -201,31 +201,17 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                               key: _sliderKey,
                               child: GestureDetector(
                                 onTap: () async {
-                                  late Timer timer = Timer(Duration.zero, () {});
-                                  Timer timerAnimate() {
-                                    return timer = Timer.periodic(Duration(milliseconds: 1), (timer) {
-                                      if (_dx < 25) {
-                                        if (mounted) {
-                                          _dx = _dx + 1;
-                                          setState(() {});
-                                        }
-                                      } else {
-                                        timer.cancel();
-                                      }
-                                    });
-                                  }
-
-                                  await Future.delayed(Duration.zero, () {
-                                    // setState(() {
-                                    //   _dx = (_dx + 25).clamp(0.0, _maxDx);
-                                    // });
-                                    timerAnimate();
-                                  });
-                                  await Future.delayed(Duration.zero, () {
-                                    setState(() {
-                                      _endDx = _dx;
-                                    });
-                                  });
+                                  // await Future.delayed(Duration.zero, () {
+                                  //   setState(() {
+                                  //     _dx = (_dx + 25).clamp(0.0, _maxDx);
+                                  //   });
+                                  // });
+                                  // await Future.delayed(Duration.zero, () {
+                                  //   setState(() {
+                                  //     _endDx = _dx;
+                                  //   });
+                                  // });
+                                  await _startAnimation();
                                   _cancelAnimation();
                                   // _animationController
                                   //     .reverse()
@@ -399,6 +385,26 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
     _cancelAnimationController.forward().orCancel;
   }
 
+  Future _startAnimation() async {
+    _startAnimationController.reset();
+    final animation = Tween<double>(
+      begin: 1,
+      end: 0,
+    ).animate(CurvedAnimation(
+      parent: _startAnimationController,
+      curve: Curves.ease,
+    ));
+
+    animation.addListener(() {
+      if (mounted) {
+        setState(() {
+          _dx = (_endDx + (_endDx * animation.value));
+        });
+      }
+    });
+    _startAnimationController.reverse().orCancel;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -406,6 +412,10 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
     // _animationController = AnimationController(vsync: this);
 
     _cancelAnimationController = AnimationController(
+      vsync: this,
+      duration: widget.animationDuration,
+    );
+    _startAnimationController = AnimationController(
       vsync: this,
       duration: widget.animationDuration,
     );
@@ -439,6 +449,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
   @override
   void dispose() {
     _cancelAnimationController.dispose();
+    _startAnimationController.dispose();
     _checkAnimationController.dispose();
     _shrinkAnimationController.dispose();
     _resizeAnimationController.dispose();
