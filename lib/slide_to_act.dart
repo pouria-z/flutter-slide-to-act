@@ -207,7 +207,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                       _dx = (_dx + 25).clamp(0.0, _maxDx);
                                     });
                                   });
-                                  await Future.delayed(Duration.zero, () {
+                                  await Future.delayed(Duration(milliseconds: 250), () {
                                     setState(() {
                                       _endDx = _dx;
                                     });
