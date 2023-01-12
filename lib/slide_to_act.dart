@@ -2,7 +2,6 @@ library flutterslidetoact;
 
 import 'dart:math';
 
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 /// Slider call to action component
@@ -107,7 +106,7 @@ class SlideAction extends StatefulWidget {
 
 /// Use a GlobalKey to access the state. This is the only way to call [SlideActionState.reset]
 class SlideActionState extends State<SlideAction> with TickerProviderStateMixin {
-  late AnimationController _animationController;
+  // late AnimationController _animationController;
   final GlobalKey _containerKey = GlobalKey();
   final GlobalKey _sliderKey = GlobalKey();
   double _dx = 0;
@@ -203,23 +202,23 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                               key: _sliderKey,
                               child: GestureDetector(
                                 onTap: () async {
-                                  // await Future.delayed(Duration.zero, () {
-                                  //   setState(() {
-                                  //     _dx = (_dx + 25).clamp(0.0, _maxDx);
-                                  //   });
-                                  // });
-                                  // await Future.delayed(Duration.zero, () {
-                                  //   setState(() {
-                                  //     _endDx = _dx;
-                                  //   });
-                                  // });
-                                  // _cancelAnimation();
-                                  _animationController
-                                      .reverse()
-                                      .whenComplete(() => _animationController.forward());
-                                  if (widget.onTap != null) {
-                                    widget.onTap!.call();
-                                  }
+                                  await Future.delayed(Duration.zero, () {
+                                    setState(() {
+                                      _dx = (_dx + 25).clamp(0.0, _maxDx);
+                                    });
+                                  });
+                                  await Future.delayed(Duration.zero, () {
+                                    setState(() {
+                                      _endDx = _dx;
+                                    });
+                                  });
+                                  _cancelAnimation();
+                                  // _animationController
+                                  //     .reverse()
+                                  //     .whenComplete(() => _animationController.forward());
+                                  // if (widget.onTap != null) {
+                                  //   widget.onTap!.call();
+                                  // }
                                 },
                                 onDoubleTap: widget.onDoubleTap,
                                 onHorizontalDragUpdate: onHorizontalDragUpdate,
@@ -238,29 +237,24 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                   child: Center(
-                                    child: SlideInRight(
-                                      duration: const Duration(milliseconds: 400),
-                                      from: MediaQuery.of(context).size.width / 6,
-                                      controller: (p0) => _animationController = p0,
-                                      child: Container(
-                                        height: widget.height - 10,
+                                    child: Container(
+                                      height: widget.height - 10,
 
-                                        decoration: BoxDecoration(
-                                          color: widget.innerColor,
-                                          borderRadius: BorderRadius.circular(50),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                                          child: Row(
-                                            children: [
-                                              Transform.rotate(
-                                                angle: widget.sliderRotate ? -pi * _progress : 0,
-                                                child: widget.sliderButtonIcon ?? Container(),
-                                              ),
-                                              const SizedBox(width: 15),
-                                              widget.sliderButtonTitle ?? Container(),
-                                            ],
-                                          ),
+                                      decoration: BoxDecoration(
+                                        color: widget.innerColor,
+                                        borderRadius: BorderRadius.circular(50),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                                        child: Row(
+                                          children: [
+                                            Transform.rotate(
+                                              angle: widget.sliderRotate ? -pi * _progress : 0,
+                                              child: widget.sliderButtonIcon ?? Container(),
+                                            ),
+                                            const SizedBox(width: 15),
+                                            widget.sliderButtonTitle ?? Container(),
+                                          ],
                                         ),
                                       ),
                                     ),
@@ -396,7 +390,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
   void initState() {
     super.initState();
 
-    _animationController = AnimationController(vsync: this);
+    // _animationController = AnimationController(vsync: this);
 
     _cancelAnimationController = AnimationController(
       vsync: this,
