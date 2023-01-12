@@ -1,5 +1,6 @@
 library flutterslidetoact;
 
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -135,8 +136,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
           key: _containerKey,
           height: widget.height,
           width: _containerWidth,
-          constraints:
-              _containerWidth != null ? null : BoxConstraints.expand(height: widget.height),
+          constraints: _containerWidth != null ? null : BoxConstraints.expand(height: widget.height),
           child: Material(
             elevation: widget.elevation,
             color: widget.outerColor ?? Theme.of(context).colorScheme.secondary,
@@ -184,8 +184,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                 textAlign: TextAlign.center,
                                 style: widget.textStyle ??
                                     TextStyle(
-                                      color: widget.innerColor ??
-                                          Theme.of(context).primaryIconTheme.color,
+                                      color: widget.innerColor ?? Theme.of(context).primaryIconTheme.color,
                                       fontSize: 24,
                                     ),
                               ),
@@ -202,12 +201,27 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                               key: _sliderKey,
                               child: GestureDetector(
                                 onTap: () async {
-                                  await Future.delayed(Duration.zero, () {
-                                    setState(() {
-                                      _dx = (_dx + 25).clamp(0.0, _maxDx);
+                                  late Timer timer = Timer(Duration.zero, () {});
+                                  Timer timerAnimate() {
+                                    return timer = Timer.periodic(Duration(milliseconds: 1), (timer) {
+                                      if (_dx < 25) {
+                                        if (mounted) {
+                                          _dx = _dx + 1;
+                                          setState(() {});
+                                        }
+                                      } else {
+                                        timer.cancel();
+                                      }
                                     });
+                                  }
+
+                                  await Future.delayed(Duration.zero, () {
+                                    // setState(() {
+                                    //   _dx = (_dx + 25).clamp(0.0, _maxDx);
+                                    // });
+                                    timerAnimate();
                                   });
-                                  await Future.delayed(Duration(milliseconds: 250), () {
+                                  await Future.delayed(Duration.zero, () {
                                     setState(() {
                                       _endDx = _dx;
                                     });
@@ -239,7 +253,6 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                                   child: Center(
                                     child: Container(
                                       height: widget.height - 10,
-
                                       decoration: BoxDecoration(
                                         color: widget.innerColor,
                                         borderRadius: BorderRadius.circular(50),
