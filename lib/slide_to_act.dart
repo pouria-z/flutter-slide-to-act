@@ -398,7 +398,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
     animation.addListener(() {
       if (mounted) {
         setState(() {
-          _dx = (_endDx + (_endDx * animation.value));
+          _dx = (_endDx * animation.value);
         });
       }
     });
