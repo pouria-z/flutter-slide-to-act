@@ -10,8 +10,6 @@ class SlideAction extends StatefulWidget {
   /// The size of the sliding icon
   final double sliderButtonIconSize;
 
-  final double maxDx;
-
   /// Tha padding of the sliding icon
   final double sliderButtonIconPadding;
 
@@ -81,7 +79,6 @@ class SlideAction extends StatefulWidget {
   const SlideAction({
     Key? key,
     this.sliderButtonIconSize = 24,
-    required this.maxDx,
     this.sliderButtonIconPadding = 16,
     this.sliderButtonYOffset = 0,
     this.sliderRotate = true,
