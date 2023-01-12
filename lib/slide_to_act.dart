@@ -402,7 +402,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
         });
       }
     });
-    _startAnimationController.reverse().orCancel;
+    _startAnimationController.forward().orCancel;
   }
 
   @override
