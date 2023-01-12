@@ -4,7 +4,6 @@ import 'dart:math';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:slide_to_act/measure_size.dart';
 
 /// Slider call to action component
 class SlideAction extends StatefulWidget {
@@ -116,12 +115,12 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
   final GlobalKey _sliderKey = GlobalKey();
   double _dx = 0;
   double _maxDx = 0;
-  double _sliderWidth = 0.0;
+  // double _sliderWidth = 0.0;
 
   double get _progress => _dx == 0 ? 0 : _dx / _maxDx;
   double _endDx = 0;
   double _dz = 1;
-  double? _initialContainerWidth, _containerWidth;
+  double? _containerWidth;
   double _checkAnimationDx = 0;
   bool submitted = false;
   late AnimationController _checkAnimationController,
@@ -203,84 +202,77 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
                           origin: Offset(_dx, 0),
                           child: Transform.translate(
                             offset: Offset(_dx, 0),
-                            child: MeasuredSize(
-                              onChange: (size) {
-                                setState(() {
-                                  _sliderWidth = size.width;
-                                });
-                              },
-                              child: Container(
-                                key: _sliderKey,
-                                child: GestureDetector(
-                                  onTap: () async {
-                                    // await Future.delayed(Duration.zero, () {
-                                    //   setState(() {
-                                    //     _dx = (_dx + 25).clamp(0.0, _maxDx);
-                                    //   });
-                                    // });
-                                    // await Future.delayed(Duration.zero, () {
-                                    //   setState(() {
-                                    //     _endDx = _dx;
-                                    //   });
-                                    // });
-                                    // _cancelAnimation();
-                                    _animationController
-                                        .reverse()
-                                        .whenComplete(() => _animationController.forward());
-                                    if (widget.onTap != null) {
-                                      widget.onTap!.call();
-                                    }
-                                  },
-                                  onDoubleTap: widget.onDoubleTap,
-                                  onHorizontalDragUpdate: onHorizontalDragUpdate,
-                                  onHorizontalDragEnd: (details) async {
-                                    _endDx = _dx;
-                                    if (_progress <= 0.95 || widget.onSubmit == null) {
-                                      _cancelAnimation();
-                                    } else {
-                                      // await _resizeAnimation();
-                                      // await _shrinkAnimation();
-                                      widget.onSubmit!();
-                                      await _checkAnimation();
-                                      await _cancelAnimation();
-                                    }
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Center(
-                                      child: SlideInRight(
-                                        duration: const Duration(milliseconds: 400),
-                                        from: MediaQuery.of(context).size.width / 6,
-                                        controller: (p0) => _animationController = p0,
-                                        child: Container(
-                                          height: widget.height - 10,
+                            child: Container(
+                              key: _sliderKey,
+                              child: GestureDetector(
+                                onTap: () async {
+                                  // await Future.delayed(Duration.zero, () {
+                                  //   setState(() {
+                                  //     _dx = (_dx + 25).clamp(0.0, _maxDx);
+                                  //   });
+                                  // });
+                                  // await Future.delayed(Duration.zero, () {
+                                  //   setState(() {
+                                  //     _endDx = _dx;
+                                  //   });
+                                  // });
+                                  // _cancelAnimation();
+                                  _animationController
+                                      .reverse()
+                                      .whenComplete(() => _animationController.forward());
+                                  if (widget.onTap != null) {
+                                    widget.onTap!.call();
+                                  }
+                                },
+                                onDoubleTap: widget.onDoubleTap,
+                                onHorizontalDragUpdate: onHorizontalDragUpdate,
+                                onHorizontalDragEnd: (details) async {
+                                  _endDx = _dx;
+                                  if (_progress <= 0.95 || widget.onSubmit == null) {
+                                    _cancelAnimation();
+                                  } else {
+                                    // await _resizeAnimation();
+                                    // await _shrinkAnimation();
+                                    widget.onSubmit!();
+                                    await _checkAnimation();
+                                    await _cancelAnimation();
+                                  }
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                  child: Center(
+                                    child: SlideInRight(
+                                      duration: const Duration(milliseconds: 400),
+                                      from: MediaQuery.of(context).size.width / 6,
+                                      controller: (p0) => _animationController = p0,
+                                      child: Container(
+                                        height: widget.height - 10,
 
-                                          decoration: BoxDecoration(
-                                            color: widget.innerColor,
-                                            borderRadius: BorderRadius.circular(50),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                                            child: Row(
-                                              children: [
-                                                Transform.rotate(
-                                                  angle: widget.sliderRotate ? -pi * _progress : 0,
-                                                  child: widget.sliderButtonIcon ?? Container(),
-                                                ),
-                                                const SizedBox(width: 15),
-                                                widget.sliderButtonTitle ?? Container(),
-                                              ],
-                                            ),
+                                        decoration: BoxDecoration(
+                                          color: widget.innerColor,
+                                          borderRadius: BorderRadius.circular(50),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                                          child: Row(
+                                            children: [
+                                              Transform.rotate(
+                                                angle: widget.sliderRotate ? -pi * _progress : 0,
+                                                child: widget.sliderButtonIcon ?? Container(),
+                                              ),
+                                              const SizedBox(width: 15),
+                                              widget.sliderButtonTitle ?? Container(),
+                                            ],
                                           ),
                                         ),
                                       ),
-                                      // Icon(
-                                      //   Icons.arrow_forward,
-                                      //   size: widget.sliderButtonIconSize,
-                                      //   color: widget.outerColor ??
-                                      //       Theme.of(context).colorScheme.secondary,
-                                      // ),
                                     ),
+                                    // Icon(
+                                    //   Icons.arrow_forward,
+                                    //   size: widget.sliderButtonIconSize,
+                                    //   color: widget.outerColor ??
+                                    //       Theme.of(context).colorScheme.secondary,
+                                    // ),
                                   ),
                                 ),
                               ),
@@ -430,7 +422,7 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final RenderBox containerBox = _containerKey.currentContext!.findRenderObject() as RenderBox;
       _containerWidth = containerBox.size.width;
-      _initialContainerWidth = _containerWidth;
+      // _initialContainerWidth = _containerWidth;
 
       final RenderBox sliderBox = _sliderKey.currentContext!.findRenderObject() as RenderBox;
       final sliderWidth = sliderBox.size.width;
