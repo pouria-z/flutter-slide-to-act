@@ -435,7 +435,6 @@ class SlideActionState extends State<SlideAction> with TickerProviderStateMixin 
     _checkAnimationController.dispose();
     _shrinkAnimationController.dispose();
     _resizeAnimationController.dispose();
-    _sliderAnimationController.dispose();
     super.dispose();
   }
 }
